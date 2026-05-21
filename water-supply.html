@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ग्रामऊर्जा // जल वाहिनी पुरवठा नियंत्रण</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel:hover {
+            background: rgba(30, 41, 59, 0.55);
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen p-4 md:p-6 overflow-y-auto no-scrollbar">
+
+    <!-- ================= वरची पट्टी / TOP NAVIGATION BAR ================= -->
+    <header class="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-4 border-b border-slate-800/60">
+        <div class="flex items-center gap-4">
+            <a href="index.html" class="p-3 glass-panel rounded-2xl text-slate-400 hover:text-white hover:border-slate-700 transition-all">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            </a>
+            <div>
+                <div class="flex items-center gap-2 text-blue-400 text-xs font-bold tracking-wider uppercase">
+                    <i data-lucide="droplet" class="w-3 h-3"></i> पाणी साठा आणि वितरण लॉग
+                </div>
+                <h1 class="text-2xl font-bold text-white tracking-tight">जल वाहिनी व्यवस्थापन (Water Hub)</h1>
+            </div>
+        </div>
+        <div class="p-4 bg-slate-900/60 rounded-2xl border border-slate-800 flex items-center gap-3">
+            <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+            </span>
+            <span class="text-sm font-medium text-blue-400">मुख्य जलवाहिनी: सुरळीत</span>
+        </div>
+    </header>
+
+    <!-- ================= मुख्य ग्रिड मांडणी / MAIN DASHBOARD MATRIX ================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        
+        <!-- डावी बाजू: पाण्याची टाकी पातळी आणि शुद्धता (LIVE TELEMETRY) -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- १. पाण्याचा साठा आणि शुद्धता मीटर -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- मुख्य टाकी पातळी -->
+                <div class="glass-panel rounded-3xl p-6 relative overflow-hidden border-t-4 border-t-blue-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-xs font-medium text-slate-400">मुख्य पाण्याच्या टाकीची पातळी</p>
+                            <h3 class="text-3xl font-bold text-white mt-1">८२% भरली आहे</h3>
+                        </div>
+                        <div class="p-3 bg-blue-500/10 text-blue-400 rounded-xl border border-blue-500/20">
+                            <i data-lucide="waves" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <!-- प्रोग्रेस बार (Progress Gauge) -->
+                    <div class="w-full bg-slate-950/60 h-2.5 rounded-full overflow-hidden mt-4">
+                        <div class="bg-blue-500 h-full w-[82%] rounded-full animate-pulse"></div>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-3 font-medium">एकूण क्षमता: ५०,००० लीटर</p>
+                </div>
+
+                <!-- पाण्याचा शुद्धता निर्देशांक -->
+                <div class="glass-panel rounded-3xl p-6 relative overflow-hidden border-t-4 border-t-emerald-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-xs font-medium text-slate-400">पाण्याची शुद्धता (TDS Level)</p>
+                            <h3 class="text-3xl font-bold text-emerald-400 mt-1">१४5 PPM</h3>
+                        </div>
+                        <div class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-2 bg-emerald-500/10 text-emerald-400 rounded-xl text-xs font-medium inline-block border border-emerald-500/20">
+                        ✓ पिण्यासाठी उत्तम आणि सुरक्षित पाणी
+                    </div>
+                </div>
+            </div>
+
+            <!-- २. पाणी सोडण्याचे वेळापत्रक (WATER DISTRIBUTION SCHEDULE) -->
+            <div class="glass-panel rounded-3xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i data-lucide="clock" class="w-5 h-5 text-blue-400"></i> पाणी सोडण्याचे वेळापत्रक (Daily Timing)
+                    </h2>
+                    <span class="text-xs text-slate-400 font-mono">नियमित वेळापत्रक</span>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-slate-400 text-xs tracking-wider">
+                                <th class="pb-3 font-medium">वितरण विभाग (Area)</th>
+                                <th class="pb-3 font-medium">वेळ (Timing)</th>
+                                <th class="pb-3 font-medium">कालावधी (Duration)</th>
+                                <th class="pb-3 font-medium">स्थिती (Current Status)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/40 text-slate-300">
+                            <tr>
+                                <td class="py-4 font-medium text-white">उत्तर व मध्य भाग (ग्रामपंचायत परिसर)</td>
+                                <td class="py-4 font-mono">सकाळी ०६:०० ते ०७:३०</td>
+                                <td class="py-4">१.५ तास</td>
+                                <td class="py-4"><span class="px-2 py-0.5 bg-slate-800 text-slate-400 text-xs rounded">पूर्ण झाले</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 font-medium text-white">दक्षिण व हरीजन गल्ली परिसर</td>
+                                <td class="py-4 font-mono">सकाळी ०७:४५ ते ०९:१५</td>
+                                <td class="py-4">१.५ तास</td>
+                                <td class="py-4"><span class="px-2 py-0.5 bg-blue-500/10 text-blue-400 text-xs rounded border border-blue-500/20 animate-pulse">पाणी सुरू आहे</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 font-medium text-white">नवीन वसाहत आणि हायवे कडील भाग</td>
+                                <td class="py-4 font-mono">संध्याकाळी ०५:०० ते ०६:३०</td>
+                                <td class="py-4">१.५ तास</td>
+                                <td class="py-4"><span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 text-xs rounded border border-amber-500/20">नियोजित</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- उजवी बाजू: पाणी पट्टी आणि टँकर बुकिंग (USER PORTAL SERVICES) -->
+        <div class="space-y-6">
+            
+            <!-- पाणी पट्टी फी आणि कर (WATER TAX PORTAL) -->
+            <div class="glass-panel rounded-3xl p-6 border border-slate-800">
+                <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <i data-lucide="receipt" class="w-5 h-5 text-blue-400"></i> वार्षिक पाणी पट्टी तपासा
+                </h2>
+                <p class="text-xs text-slate-400 mb-6">तुमचा घर नंबर (House ID) टाकून पाणी पट्टीची थकबाकी तपासा.</p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs text-slate-400 block mb-2 font-medium">घर नंबर टाका (उदा. H-104):</label>
+                        <input type="text" placeholder="उदा. एच-१0४" class="w-full bg-slate-950/60 border border-slate-800 rounded-2xl p-4 text-white placeholder-slate-600 focus:outline-none focus:border-blue-500 text-sm tracking-wider">
+                    </div>
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-slate-950 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm shadow-lg shadow-blue-500/10">
+                        <i data-lucide="search" class="w-4 h-4"></i> कर तपशील शोधा
+                    </button>
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-slate-800/80 flex justify-between items-center">
+                    <div>
+                        <span class="text-xs text-slate-400 block">थकबाकी वर्ष: २०२५-२६</span>
+                        <span class="text-sm font-bold text-white">चालू कर रक्कम:</span>
+                    </div>
+                    <span class="text-xl font-bold text-blue-400 font-mono">₹ ३५०.००</span>
+                </div>
+            </div>
+
+            <!-- आणीबाणीसाठी शासकीय टँकर बुकिंग (EMERGENCY WATER TANKER SERVICE) -->
+            <div class="glass-panel rounded-3xl p-6 border border-slate-800">
+                <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <i data-lucide="truck" class="w-5 h-5 text-amber-400"></i> शासकीय टँकर मागणी अर्ज
+                </h2>
+                <p class="text-xs text-slate-400 mb-4">घरी लग्नकार्य किंवा विहीर कोरडी पडल्यास तातडीच्या टँकरसाठी थेट अर्ज करा.</p>
+                
+                <form class="space-y-4">
+                    <div>
+                        <label class="text-xs text-slate-400 block mb-2 font-medium">मागणीचे कारण निवडा:</label>
+                        <select class="w-full bg-slate-950/60 border border-slate-800 rounded-2xl p-4 text-sm text-slate-300 focus:outline-none focus:border-blue-500">
+                            <option>घरगुती सार्वजनिक कार्यक्रम / लग्नकार्य</option>
+                            <option>विहिरीला / बोअरवेलला पाणी नाही</option>
+                            <option>पाईपलाईन खराब झाल्यामुळे पाणी टंचाई</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-400 block mb-2 font-medium">टँकर पाहिजे तो दिनांक:</label>
+                        <input type="date" class="w-full bg-slate-950/60 border border-slate-800 rounded-2xl p-4 text-sm text-slate-300 focus:outline-none focus:border-blue-500">
+                    </div>
+                    <button type="button" class="w-full bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold py-3 rounded-2xl transition-all text-sm">
+                        टँकरची मागणी नोंदवा
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- तळपट्टी माहिती -->
+    <footer class="w-full text-center text-xs font-mono text-slate-600 mt-12 pt-4 border-t border-slate-900">
+        राष्ट्रीय ग्रामीण पेयजल योजना (NRDWP) संरेखित गाव जल नियंत्रण कक्ष २०२६
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

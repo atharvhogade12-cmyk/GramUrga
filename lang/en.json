@@ -1,0 +1,131 @@
+{
+  "app_name": "GramUrja",
+  "app_tagline": "Our Village, Our Service",
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "power": "Power Grid",
+    "water": "Water Supply",
+    "agriculture": "Agriculture",
+    "sanitation": "Sanitation",
+    "grievance": "E-Choupal",
+    "news": "News",
+    "weather": "Weather",
+    "crop_diagnosis": "Crop Diagnosis",
+    "market_chat": "Market Chat",
+    "bus_tracker": "Bus Tracker",
+    "admin": "Admin",
+    "analytics": "Analytics",
+    "login": "Login",
+    "logout": "Logout",
+    "services": "Services",
+    "ai_tools": "AI Tools",
+    "transport": "Transport",
+    "settings": "Settings"
+  },
+  "landing": {
+    "title": "Select Your Region",
+    "subtitle": "All government & public services of your village in one place",
+    "detect_location": "Detect My Location",
+    "detecting": "Detecting location...",
+    "select_region": "Select Region",
+    "enter_dashboard": "Enter Dashboard",
+    "system_status": "System Online",
+    "main_grid": "Main Village Grid",
+    "excellent": "Excellent",
+    "description": "All government and public utilities of your village, now in one place.",
+    "sub_description": "Manage electricity bills, water supply, farm schedules and complaints directly from your mobile."
+  },
+  "dashboard": {
+    "title": "Village Service Center",
+    "subtitle": "Click any service below to view details or apply.",
+    "notifications": "Notifications",
+    "emergency": "Emergency (SOS)",
+    "running": "Running",
+    "safe": "Safe",
+    "available": "Available",
+    "active": "Active",
+    "online": "Online",
+    "view": "View",
+    "suggest_new": "Suggest New Service",
+    "suggest_desc": "Does the village need a new service?"
+  },
+  "power": {
+    "title": "Power Grid Management",
+    "subtitle": "Live Tracking & Billing",
+    "status": "Village Power: Online",
+    "solar_gen": "Total Solar Energy Generation",
+    "village_usage": "Current Village Consumption",
+    "load_shedding": "Load Shedding Schedule",
+    "check_bill": "Check Your Electricity Bill",
+    "consumer_id": "Enter Consumer Number",
+    "search_bill": "Search Bill",
+    "file_complaint": "File Power Complaint",
+    "submit": "Submit Complaint"
+  },
+  "water": {
+    "title": "Water Supply Management",
+    "subtitle": "Storage & Distribution Log",
+    "status": "Main Pipeline: Normal",
+    "tank_level": "Main Tank Water Level",
+    "tds": "Water Purity (TDS Level)",
+    "schedule": "Water Distribution Schedule",
+    "tax_check": "Check Annual Water Tax",
+    "tanker_request": "Government Tanker Request"
+  },
+  "agriculture": {
+    "title": "Agri-Tech Digital Center",
+    "subtitle": "Farmer Empowerment & Digital Market",
+    "status": "Agri Advisory: Available",
+    "cold_storage": "Community Cold Storage Availability",
+    "weather_advice": "Today's Weather & Pest Advisory",
+    "market_rates": "Today's Local Market Rates",
+    "pump_booking": "Solar Pump Slot Booking",
+    "storage_reserve": "Cold Storage Space Reservation"
+  },
+  "crop_diagnosis": {
+    "title": "Crop Disease Diagnosis (AI)",
+    "subtitle": "Upload a photo of your crop, AI will diagnose it",
+    "upload_label": "Upload Crop Photo",
+    "drag_drop": "Drag photo here or click to upload",
+    "supported": "JPG, PNG — Max 5MB",
+    "analyze": "Start AI Analysis",
+    "analyzing": "Analyzing...",
+    "result": "Diagnosis Result",
+    "no_image": "Please upload an image first"
+  },
+  "market_chat": {
+    "title": "Market Price AI Advisor",
+    "subtitle": "Know crop prices — chat directly with AI",
+    "placeholder": "Type your question...",
+    "send": "Send",
+    "welcome": "Hello! I'm your market price advisor. Which crop's price would you like to know?"
+  },
+  "bus_tracker": {
+    "title": "Bus Route Tracker",
+    "subtitle": "Live tracking of rural bus routes",
+    "driver_mode": "Driver Mode",
+    "start_sharing": "Start Sharing Location",
+    "stop_sharing": "Stop Sharing",
+    "no_buses": "No buses currently online"
+  },
+  "login": {
+    "title": "Secure Login",
+    "subtitle": "Login according to your department",
+    "username": "Username",
+    "password": "Password",
+    "department": "Select Department",
+    "submit": "Login",
+    "error": "Invalid credentials"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try Again",
+    "back": "Back",
+    "version": "Version 2.0.26",
+    "location": "Kolhapur, Maharashtra",
+    "secured": "All data secured (AES-256)",
+    "footer": "Secure & Digital Village Management System"
+  }
+}

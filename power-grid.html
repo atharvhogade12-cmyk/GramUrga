@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ग्रामऊर्जा // वीज पुरवठा नियंत्रण</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel:hover {
+            background: rgba(30, 41, 59, 0.55);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen p-4 md:p-6 overflow-y-auto no-scrollbar">
+
+    <!-- ================= वरची पट्टी / TOP NAVIGATION BAR ================= -->
+    <header class="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-4 border-b border-slate-800/60">
+        <div class="flex items-center gap-4">
+            <a href="index.html" class="p-3 glass-panel rounded-2xl text-slate-400 hover:text-white hover:border-slate-700 transition-all">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            </a>
+            <div>
+                <div class="flex items-center gap-2 text-amber-400 text-xs font-bold tracking-wider uppercase">
+                    <i data-lucide="bolt" class="w-3 h-3"></i> लाईव्ह ट्रॅकिंग आणि बिलिंग
+                </div>
+                <h1 class="text-2xl font-bold text-white tracking-tight">ऊर्जा ग्रीड व्यवस्थापन (Power Hub)</h1>
+            </div>
+        </div>
+        <div class="p-4 bg-slate-900/60 rounded-2xl border border-slate-800 flex items-center gap-3">
+            <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+            </span>
+            <span class="text-sm font-medium text-emerald-400">गावची वीज: चालू आहे</span>
+        </div>
+    </header>
+
+    <!-- ================= मुख्य ग्रिड मांडणी / MAIN DASHBOARD MATRIX ================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        
+        <!-- डावी बाजू: लाईव्ह आकडेवारी आणि ग्राफिक्स (METRICS CANVAS) -->
+        <div class="lg:col-span-2 space-y-6">
+            
+            <!-- १. वीज निर्मिती कार्ड्स (Generation & Consumption) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- सौर ऊर्जा निर्मिती -->
+                <div class="glass-panel rounded-3xl p-6 relative overflow-hidden border-t-4 border-t-amber-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-xs font-medium text-slate-400">एकूण सौर ऊर्जा निर्मिती</p>
+                            <h3 class="text-3xl font-bold text-white mt-1">४८.५ kW</h3>
+                        </div>
+                        <div class="p-3 bg-amber-500/10 text-amber-400 rounded-xl border border-amber-500/20">
+                            <i data-lucide="sun" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <p class="text-xs text-emerald-400 flex items-center gap-1 font-medium">
+                        <i data-lucide="trending-up" class="w-3 h-3"></i> कालपेक्षा १२% जास्त निर्मिती
+                    </p>
+                </div>
+
+                <!-- गावातील एकूण वापर -->
+                <div class="glass-panel rounded-3xl p-6 relative overflow-hidden border-t-4 border-t-sky-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <p class="text-xs font-medium text-slate-400">गावातील सद्य वीज वापर</p>
+                            <h3 class="text-3xl font-bold text-white mt-1">३२.१ kW</h3>
+                        </div>
+                        <div class="p-3 bg-sky-500/10 text-sky-400 rounded-xl border border-sky-500/20">
+                            <i data-lucide="activity" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 font-medium">
+                        शिल्लक ऊर्जा बॅटरी बँक मध्ये साठवली जात आहे.
+                    </p>
+                </div>
+            </div>
+
+            <!-- २. लोडशेडिंग वेळापत्रक (LOAD SHEDDING SCHEDULE TABLE) -->
+            <div class="glass-panel rounded-3xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i data-lucide="calendar" class="w-5 h-5 text-amber-500"></i> वीज कपात वेळापत्रक (Load Shedding)
+                    </h2>
+                    <span class="text-xs text-slate-400 font-mono">अपडेटेड: आज सकाळी ६:००</span>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-800 text-slate-400 text-xs tracking-wider">
+                                <th class="pb-3 font-medium">गावातील भाग (Zone)</th>
+                                <th class="pb-3 font-medium">वार (Day)</th>
+                                <th class="pb-3 font-medium">वेळ (Time)</th>
+                                <th class="pb-3 font-medium">स्थिती (Status)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/40 text-slate-300">
+                            <tr>
+                                <td class="py-4 font-medium text-white">पूर्व गल्ली व मारुती मंदिर परिसर</td>
+                                <td class="py-4">सोमवार</td>
+                                <td class="py-4 font-mono">01:00 PM - 03:00 PM</td>
+                                <td class="py-4"><span class="px-2 py-0.5 bg-amber-500/10 text-amber-400 text-xs rounded border border-amber-500/20">नियोजित</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 font-medium text-white">पश्चिम गल्ली व शाळा परिसर</td>
+                                <td class="py-4">बुधवार</td>
+                                <td class="py-4 font-mono">10:00 AM - 12:00 PM</td>
+                                <td class="py-4"><span class="px-2 py-0.5 bg-slate-800 text-slate-400 text-xs rounded">कपात नाही</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 font-medium text-white">शेती पंप फीडर १ (Agri Pump)</td>
+                                <td class="py-4">दररोज</td>
+                                <td class="py-4 font-mono">11:00 PM - 06:00 AM</td>
+                                <td class="py-4"><span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 text-xs rounded border border-emerald-500/20">रात्रीचा वीज पुरवठा</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- उजवी बाजू: वैयक्तिक बिल आणि तक्रार निवारण (USER UTILITY INTERACTION) -->
+        <div class="space-y-6">
+            
+            <!-- घराचे बिल तपासणी केंद्र (BILL INQUIRY CONTAINER) -->
+            <div class="glass-panel rounded-3xl p-6 border border-slate-800">
+                <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <i data-lucide="credit-card" class="w-5 h-5 text-sky-400"></i> आपले लाईट बिल तपासा
+                </h2>
+                <p class="text-xs text-slate-400 mb-6">तुमचा १२ अंकी ग्राहक क्रमांक (Consumer ID) टाकून चालू महिन्याचे बिल पहा.</p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs text-slate-400 block mb-2 font-medium">ग्राहक नंबर टाका:</label>
+                        <input type="text" placeholder="उदा. ४३०१२३४५६७८९" class="w-full bg-slate-950/60 border border-slate-800 rounded-2xl p-4 text-white placeholder-slate-600 focus:outline-none focus:border-amber-500 text-sm font-mono tracking-widest">
+                    </div>
+                    <button class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-sm shadow-lg shadow-amber-500/10">
+                        <i data-lucide="search" class="w-4 h-4"></i> बिल शोधा
+                    </button>
+                </div>
+
+                <!-- डेमो बिल कार्ड (फक्त शोधल्यावर दिसण्यासाठी - Frontend Mockup) -->
+                <div class="mt-6 pt-6 border-t border-slate-800/80 space-y-3">
+                    <div class="flex justify-between text-xs text-slate-400">
+                        <span>चालू महिना:</span>
+                        <span class="text-white font-medium">मे २०२६</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-slate-400">
+                        <span>एकूण वापर:</span>
+                        <span class="text-white font-mono font-medium">१४२ युनिट्स (Units)</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2">
+                        <span class="text-sm font-bold text-white">एकूण देय रक्कम:</span>
+                        <span class="text-lg font-bold text-amber-400 font-mono">₹ ८५०.००</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- वीज तक्रार नोंदणी बॉक्स (GRIEVANCE NODE) -->
+            <div class="glass-panel rounded-3xl p-6 border border-slate-800 relative overflow-hidden">
+                <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2">
+                    <i data-lucide="alert-circle" class="w-5 h-5 text-rose-500"></i> वीज तक्रार नोंदवा
+                </h2>
+                <p class="text-xs text-slate-400 mb-4">डीपी जळणे, वायर तुटणे किंवा मीटर खराब असल्यास त्वरित कळवा.</p>
+                
+                <form class="space-y-4">
+                    <select class="w-full bg-slate-950/60 border border-slate-800 rounded-2xl p-4 text-sm text-slate-300 focus:outline-none focus:border-rose-500">
+                        <option>तक्रारीचा प्रकार निवडा</option>
+                        <option>पूर्ण गल्लीची वीज बंद आहे</option>
+                        <option>घरातील मीटर वेगाने फिरत आहे</option>
+                        <option>अडथळा आणणारी झाडाची फांदी / वायर ढिली आहे</option>
+                        <option>इतर गंभीर समस्या</option>
+                    </select>
+                    <textarea rows="3" placeholder="समस्येबद्दल सविस्तर माहिती इथे लिहा..." class="w-full bg-slate-950/60 border border-slate-800 rounded-2xl p-4 text-sm text-white placeholder-slate-600 focus:outline-none focus:border-rose-500"></textarea>
+                    <button type="button" class="w-full bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 font-semibold py-3 rounded-2xl transition-all text-sm">
+                        तक्रार सबमिट करा
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- तळपट्टी माहिती -->
+    <footer class="w-full text-center text-xs font-mono text-slate-600 mt-12 pt-4 border-t border-slate-900">
+        महाराष्ट्र राज्य विद्युत वितरण कंपनी (MSEDCL) गाव ग्रीड संरेखित प्रणाली २०२६
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
