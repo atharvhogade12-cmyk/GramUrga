@@ -4,12 +4,12 @@ header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
 
 // LIVE REMOTE SERVER PARAMS (From your ezyro dashboard)
-$host     = getenv("DB_HOST") ?: "sql312.ezyro.com"; 
-$dbname   = getenv("DB_NAME") ?: "ezyro_41983904_gramurga"; 
-$username = getenv("DB_USER") ?: "ezyro_41983904"; 
+$host     = getenv("DB_HOST") ?: "localhost"; 
+$dbname   = getenv("DB_NAME") ?: "your_database_name"; 
+$username = getenv("DB_USER") ?: "your_username"; 
 
 // PUT YOUR ACTUAL HOSTING ACCOUNT PASSWORD BETWEEN THESE QUOTES:
-$password = getenv("DB_PASS") ?: "250c686"; 
+$password = getenv("DB_PASS") ?: "your_password"; 
 
 try {
     // Establish the connection pipeline to MySQL
