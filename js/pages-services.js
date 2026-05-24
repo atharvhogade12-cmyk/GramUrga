@@ -40,14 +40,14 @@ Pages.dashboard = function() {
     </div>`;
   });
   html += `
-    <div class="card" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-style:dashed" onclick="Router.navigate('crop-diagnosis')">
+    <div class="card" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-style:dashed" onclick="window.open('https://agent.jotform.com/019e4d7db8dc7808831f6bba09342b53eaf5', '_blank')">
       <div style="width:48px;height:48px;border-radius:50%;background:rgba(14,165,233,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:0.75rem;color:var(--sky)">
         <i data-lucide="scan-search" style="width:24px;height:24px"></i>
       </div>
       <h3 style="font-size:0.875rem;font-weight:700">🌿 पीक रोग निदान (AI)</h3>
       <p style="font-size:0.6875rem;color:var(--text-muted);margin-top:0.25rem">फोटो अपलोड करा, AI निदान करेल</p>
     </div>
-    <div class="card" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-style:dashed" onclick="Router.navigate('market-chat')">
+    <div class="card" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-style:dashed" onclick="window.open('https://www.jotform.com/agent/019e5a478e717795ac7b3a32001fb56cbcbc', '_blank')">
       <div style="width:48px;height:48px;border-radius:50%;background:rgba(16,185,129,0.1);display:flex;align-items:center;justify-content:center;margin-bottom:0.75rem;color:var(--emerald)">
         <i data-lucide="message-square-text" style="width:24px;height:24px"></i>
       </div>

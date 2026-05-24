@@ -189,6 +189,71 @@ const Analytics = (() => {
       const v = document.getElementById('stat-active');
       if (v) v.textContent = (35 + Math.floor(Math.random() * 10)).toString();
     }, 10000);
+
+    initAdminForms();
+  }
+
+  function initAdminForms() {
+    const powerForm = document.getElementById('admin-power-form');
+    if (powerForm) {
+      powerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+          ward_id: document.getElementById('admin-power-ward').value,
+          status: document.getElementById('admin-power-status').value
+        };
+        await postUpdate('analytics/update-power.php', payload, 'admin-power-btn');
+      });
+    }
+
+    const waterForm = document.getElementById('admin-water-form');
+    if (waterForm) {
+      waterForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+          ward_id: document.getElementById('admin-water-ward').value,
+          status: document.getElementById('admin-water-status').value
+        };
+        await postUpdate('analytics/update-water.php', payload, 'admin-water-btn');
+      });
+    }
+
+    const transitForm = document.getElementById('admin-transit-form');
+    if (transitForm) {
+      transitForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const payload = {
+          track_id: 1,
+          next_bus_time: document.getElementById('admin-transit-time').value
+        };
+        await postUpdate('analytics/update-transit.php', payload, 'admin-transit-btn');
+      });
+    }
+  }
+
+  async function postUpdate(url, payload, btnId) {
+    const btn = document.getElementById(btnId);
+    const originalText = btn.innerHTML;
+    btn.innerHTML = 'अपडेट होत आहे...';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+      if (json.status === 'success') {
+        Toast.show('डेटा यशस्वीरित्या अपडेट झाला!', 'success');
+      } else {
+        Toast.show('त्रुटी: ' + json.message, 'error');
+      }
+    } catch (e) {
+      Toast.show('नेटवर्क त्रुटी', 'error');
+    }
+    
+    btn.innerHTML = originalText;
   }
 
   function animateCounter(id, target) {
@@ -225,3 +290,289 @@ const Analytics = (() => {
 
   return { init };
 })();
+
+/** GramUrja — News Module (Dynamic) */
+const NewsModule = (() => {
+  let isListenerRegistered = false;
+
+  const DEFAULT_NEWS = [
+    {
+      id: 1,
+      category: 'शासकीय योजना',
+      title: '"माझी लाडकी बहीण" योजना विशेष नोंदणी कॅम्प उद्यापासून!',
+      content: 'अपूर्ण अर्ज असलेल्या महिलांसाठी ग्रामपंचायत कार्यालयात सकाळी ९ ते संध्या. ५ शिबिर. आधार, बँक पासबुक, रेशन कार्ड आणावे.',
+      is_urgent: 1,
+      created_at: new Date().toISOString()
+    },
+    {
+      id: 2,
+      category: 'वीज विभाग',
+      title: 'उद्या दुपारी २ ते ५ वीजपुरवठा खंडित राहील',
+      content: 'मुख्य ट्रान्सफॉर्मर दुरुस्तीचे काम असल्याने प्रभाग क्र. ३ आणि ४ मध्ये वीजपुरवठा बंद राहील. नागरिकांनी सहकार्य करावे.',
+      is_urgent: 0,
+      created_at: new Date().toISOString()
+    }
+  ];
+
+  function getCategoryTranslation(category) {
+    if (typeof I18n === 'undefined') return category;
+    const cat = category.toLowerCase().trim();
+    if (cat.includes('योजना') || cat.includes('scheme')) return I18n.t('news.cat_schemes');
+    if (cat.includes('वीज') || cat.includes('power')) return I18n.t('news.cat_power');
+    if (cat.includes('पाणी') || cat.includes('water')) return I18n.t('news.cat_water');
+    if (cat.includes('कृषी') || cat.includes('agri')) return I18n.t('news.cat_agri');
+    if (cat.includes('सामान्य') || cat.includes('general')) return I18n.t('news.cat_general');
+    return category;
+  }
+
+  function getNewsTitle(news) {
+    if (typeof I18n === 'undefined') return news.title;
+    const key = `news.news_${news.id}_title`;
+    const tVal = I18n.t(key);
+    return (tVal !== key) ? tVal : news.title;
+  }
+
+  function getNewsContent(news) {
+    if (typeof I18n === 'undefined') return news.content;
+    const key = `news.news_${news.id}_content`;
+    const tVal = I18n.t(key);
+    return (tVal !== key) ? tVal : news.content;
+  }
+
+  function formatDate(dateStr) {
+    try {
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return dateStr;
+      const day = d.getDate();
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const month = months[d.getMonth()];
+      const hours = String(d.getHours()).padStart(2, '0');
+      const mins = String(d.getMinutes()).padStart(2, '0');
+      return `${day} ${month}, ${hours}:${mins}`;
+    } catch (e) {
+      return dateStr;
+    }
+  }
+
+  async function init() {
+    const container = document.getElementById('news-container');
+    if (!container) return;
+
+    if (!isListenerRegistered && typeof I18n !== 'undefined') {
+      I18n.onChange(() => {
+        if (typeof Router !== 'undefined' && Router.getCurrent() === 'news') {
+          init();
+        }
+      });
+      isListenerRegistered = true;
+    }
+
+    try {
+      let newsList = [];
+      try {
+        const res = await fetch('analytics/fetch-news.php');
+        const json = await res.json();
+        if (json.status === 'success') {
+          newsList = json.data;
+        } else {
+          throw new Error(json.message);
+        }
+      } catch (e) {
+        console.warn("Failed to fetch news from database, checking localStorage:", e);
+        const localNews = localStorage.getItem('gramurja_news');
+        if (!localNews) {
+          localStorage.setItem('gramurja_news', JSON.stringify(DEFAULT_NEWS));
+          newsList = DEFAULT_NEWS;
+        } else {
+          newsList = JSON.parse(localNews);
+        }
+      }
+
+      if (newsList.length > 0) {
+        let leftCol = '<div style="display:flex;flex-direction:column;gap:1.5rem">';
+        let rightCol = '<div style="display:flex;flex-direction:column;gap:1.5rem">';
+        
+        let urgentAlertsHtml = '';
+        let staticDocsHtml = `
+        <div class="card-static" style="padding:1.5rem;border-radius:1.5rem">
+          <h2 style="font-size:1.125rem;font-weight:700;margin-bottom:0.75rem"><i data-lucide="download-cloud" style="width:18px;height:18px;color:var(--indigo)"></i> <span data-i18n="news.download_docs">${typeof I18n !== 'undefined' ? I18n.t('news.download_docs') : 'कागदपत्रे डाउनलोड'}</span></h2>
+          <div style="padding:0.625rem;background:rgba(2,6,23,0.4);border-radius:0.75rem;border:1px solid rgba(51,65,85,0.3);display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;font-size:0.75rem"><span data-i18n="news.house_list">${typeof I18n !== 'undefined' ? I18n.t('news.house_list') : '🏠 घरकुल यादी २०२६.pdf'}</span><button class="btn btn-ghost" style="padding:0.375rem"><i data-lucide="download" style="width:14px;height:14px"></i></button></div>
+          <div style="padding:0.625rem;background:rgba(2,6,23,0.4);border-radius:0.75rem;border:1px solid rgba(51,65,85,0.3);display:flex;justify-content:space-between;align-items:center;font-size:0.75rem"><span data-i18n="news.budget_report">${typeof I18n !== 'undefined' ? I18n.t('news.budget_report') : '📋 बजेट अहवाल २०२६.pdf'}</span><button class="btn btn-ghost" style="padding:0.375rem"><i data-lucide="download" style="width:14px;height:14px"></i></button></div>
+        </div>`;
+
+        newsList.forEach((news, index) => {
+          const category = getCategoryTranslation(news.category);
+          const title = getNewsTitle(news);
+          const content = getNewsContent(news);
+          const dateStr = news.formatted_date || formatDate(news.created_at);
+
+          if (news.is_urgent == 1 || news.is_urgent === true || news.is_urgent === "1") {
+            urgentAlertsHtml += `<div style="padding:0.875rem;background:rgba(2,6,23,0.5);border:1px solid rgba(244,63,94,0.15);border-radius:0.75rem;margin-bottom:0.75rem"><span style="font-size:0.5625rem;font-family:monospace;color:var(--rose);text-transform:uppercase;letter-spacing:0.1em">⚠️ ${category}</span><p style="font-size:0.75rem;margin-top:0.25rem;font-weight:500">${title}</p></div>`;
+          } else {
+            const color = index % 2 === 0 ? 'var(--indigo)' : 'var(--emerald)';
+            const html = `
+            <div class="card-static" style="padding:1.5rem;border-radius:1.5rem;border-left:3px solid ${color}">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;font-size:0.75rem"><span class="badge badge-info" style="background: ${color}20; color: ${color}; border-color: ${color}40;">${category}</span><span style="color:var(--text-muted);font-family:monospace"><i data-lucide="clock" style="width:12px;height:12px"></i> ${dateStr}</span></div>
+              <h3 style="font-size:1.125rem;font-weight:700;margin-bottom:0.5rem;cursor:pointer">${title}</h3>
+              <p style="font-size:0.8125rem;color:var(--text-secondary);line-height:1.7">${content}</p>
+            </div>`;
+            leftCol += html;
+          }
+        });
+
+        if (urgentAlertsHtml) {
+          rightCol += `
+          <div class="card-static" style="padding:1.5rem;border-radius:1.5rem;background:linear-gradient(135deg,rgba(244,63,94,0.05),transparent)">
+            <h2 style="font-size:1.125rem;font-weight:700;color:var(--rose);margin-bottom:0.75rem"><i data-lucide="alert-octagon" style="width:18px;height:18px"></i> <span data-i18n="news.important_alerts">${typeof I18n !== 'undefined' ? I18n.t('news.important_alerts') : 'महत्त्वाच्या सूचना'}</span></h2>
+            ${urgentAlertsHtml}
+          </div>`;
+        }
+        
+        rightCol += staticDocsHtml;
+        leftCol += '</div>';
+        rightCol += '</div>';
+
+        container.innerHTML = leftCol + rightCol;
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+      } else {
+        container.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 3rem; color: var(--text-muted);" data-i18n="news.no_news">${typeof I18n !== 'undefined' ? I18n.t('news.no_news') : 'बातम्या उपलब्ध नाहीत.'}</div>`;
+      }
+    } catch (e) {
+      container.innerHTML = `<div style="grid-column: span 2; text-align: center; padding: 3rem; color: var(--rose);" data-i18n="news.error_loading">${typeof I18n !== 'undefined' ? I18n.t('news.error_loading') : 'डेटा लोड करताना त्रुटी आली.'}</div>`;
+    }
+  }
+  return { init };
+})();
+
+/** GramUrja — Grievance Module (Dynamic) */
+const GrievanceModule = (() => {
+  function init() {
+    const form = document.getElementById('grievance-form');
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('grv-submit-btn');
+        btn.innerHTML = 'प्रक्रिया सुरू आहे...';
+        btn.disabled = true;
+
+        const payload = {
+          full_name: document.getElementById('grv-name').value,
+          mobile: document.getElementById('grv-mobile').value,
+          department: document.getElementById('grv-dept').value,
+          ward: document.getElementById('grv-ward').value,
+          description: document.getElementById('grv-desc').value
+        };
+
+        let isSuccess = false;
+        let trackingId = '';
+        try {
+          const res = await fetch('analytics/submit-grievance.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const json = await res.json();
+          if (json.status === 'success') {
+            isSuccess = true;
+            trackingId = json.tracking_id;
+          } else {
+            Toast.show('त्रुटी: ' + json.message, 'error');
+          }
+        } catch (e) {
+          console.warn("Failed to submit grievance to PHP backend, saving locally:", e);
+          trackingId = 'GRV-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+          const grievances = JSON.parse(localStorage.getItem('gramurja_grievances') || '[]');
+          const newGrievance = {
+            tracking_id: trackingId,
+            full_name: payload.full_name,
+            mobile: payload.mobile,
+            department: payload.department,
+            ward: payload.ward,
+            description: payload.description,
+            status: 'Pending',
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            last_updated: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+          };
+          grievances.unshift(newGrievance);
+          localStorage.setItem('gramurja_grievances', JSON.stringify(grievances));
+          isSuccess = true;
+        }
+
+        if (isSuccess) {
+          Toast.show('तक्रार नोंदवली! Tracking ID: ' + trackingId, 'success');
+          form.reset();
+          document.getElementById('grv-track-id').value = trackingId;
+          checkStatus(trackingId);
+        }
+
+        btn.innerHTML = 'तक्रार नोंदवा';
+        btn.disabled = false;
+      });
+    }
+
+    const trackBtn = document.getElementById('grv-track-btn');
+    if (trackBtn) {
+      trackBtn.addEventListener('click', () => {
+        const id = document.getElementById('grv-track-id').value.trim();
+        if (id) checkStatus(id);
+        else Toast.show('Tracking ID प्रविष्ट करा', 'error');
+      });
+    }
+  }
+
+  async function checkStatus(id) {
+    const resDiv = document.getElementById('grv-track-result');
+    if (!resDiv) return;
+    resDiv.style.display = 'block';
+    resDiv.innerHTML = '<div class="skeleton" style="height:20px;width:100%;border-radius:4px"></div>';
+    
+    try {
+      const res = await fetch('analytics/fetch-grievance-status.php?tracking_id=' + encodeURIComponent(id));
+      const json = await res.json();
+
+      if (json.status === 'success') {
+        renderGrievanceStatus(json.data);
+      } else {
+        throw new Error(json.message);
+      }
+    } catch (e) {
+      console.warn("Failed to check status from backend, checking localStorage:", e);
+      const grievances = JSON.parse(localStorage.getItem('gramurja_grievances') || '[]');
+      const found = grievances.find(g => g.tracking_id === id);
+      if (found) {
+        renderGrievanceStatus({
+          tracking_id: found.tracking_id,
+          department: found.department,
+          status: found.status,
+          last_updated: found.last_updated || new Date(found.updated_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+        });
+      } else {
+        resDiv.innerHTML = `<div style="color:var(--rose);font-size:0.75rem">तक्रार सापडली नाही. (Not Found)</div>`;
+      }
+    }
+  }
+
+  function renderGrievanceStatus(data) {
+    const resDiv = document.getElementById('grv-track-result');
+    if (!resDiv) return;
+    let iconColor = 'var(--amber)';
+    let statusText = 'प्रक्रिया सुरू';
+    if (data.status.toLowerCase() === 'resolved') { iconColor = 'var(--emerald)'; statusText = 'पूर्ण ✓'; }
+    if (data.status.toLowerCase() === 'pending') { iconColor = 'var(--rose)'; statusText = 'प्रलंबित'; }
+
+    resDiv.innerHTML = `
+      <div style="display:flex;gap:0.75rem;margin-bottom:0.75rem">
+        <div style="width:14px;height:14px;border-radius:50%;background:${iconColor};flex-shrink:0;margin-top:2px"></div>
+        <div>
+          <span style="font-size:0.6875rem;color:var(--text-muted);font-family:monospace">${data.last_updated}</span>
+          <p style="font-size:0.75rem;font-weight:500;color:${iconColor}">${statusText}</p>
+          <p style="font-size:0.6875rem;color:var(--text-secondary);margin-top:0.25rem">विभाग: ${data.department}</p>
+        </div>
+      </div>
+    `;
+  }
+
+  return { init };
+})();
+

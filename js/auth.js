@@ -52,7 +52,12 @@ const Auth = (() => {
 
   function canAccess(page) {
     const session = getSession();
-    if (!session) return page === 'landing' || page === 'login';
+    const PUBLIC_PAGES = [
+      'landing', 'login', 'dashboard', 'power', 'water', 'agriculture', 
+      'sanitation', 'grievance', 'news', 'weather', 
+      'crop-diagnosis', 'market-chat', 'bus-tracker'
+    ];
+    if (!session) return PUBLIC_PAGES.includes(page);
     const allowed = ACCESS[session.role] || [];
     if (allowed.includes('*')) return true;
     // Staff can access their department page

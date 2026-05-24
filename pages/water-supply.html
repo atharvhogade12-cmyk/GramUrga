@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ग्रामऊर्जा // जल वाहिनी व्यवस्थापन (Water Hub)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-dark: #0b1120; --card-bg: #111827; --border-color: #1f2937;
+            --text-main: #f8fafc; --text-muted: #94a3b8;
+            --brand-blue: #3b82f6; --brand-green: #10b981; --brand-slate: #64748b;
+        }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Poppins', sans-serif; margin: 0; padding: 2rem; min-height: 100vh; }
+        
+        /* Header */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .title-group { display: flex; align-items: center; gap: 1rem; }
+        .back-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; text-decoration: none; }
+        .back-btn:hover { background: rgba(255,255,255,0.1); }
+        .status-pill { background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: var(--brand-blue); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        /* Top Summary Cards */
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
+        .summary-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; position: relative; }
+        .summary-card.glow-blue { border-top: 2px solid var(--brand-blue); }
+        .summary-card.glow-green { border-top: 2px solid var(--brand-green); }
+        .icon-box { position: absolute; right: 1.5rem; top: 1.5rem; width: 48px; height: 48px; border-radius: 0.75rem; display: flex; justify-content: center; align-items: center; }
+        
+        /* Progress Bar */
+        .progress-bg { background: var(--border-color); height: 8px; border-radius: 4px; margin-top: 1rem; width: 100%; overflow: hidden; }
+        .progress-fill { background: var(--brand-blue); height: 100%; width: 82%; }
+
+        /* Main Layout */
+        .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+        @media (max-width: 1024px) { .main-grid { grid-template-columns: 1fr; } }
+        
+        /* Table Box */
+        .table-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; border-top: 2px solid var(--brand-blue); }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th { text-align: left; padding: 1rem; color: var(--text-muted); font-size: 0.875rem; border-bottom: 1px solid var(--border-color); }
+        td { padding: 1rem; font-size: 0.875rem; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        
+        /* Sidebar Forms */
+        .form-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .input-box { width: 100%; padding: 0.875rem; background: var(--bg-dark); border: 1px solid var(--border-color); color: white; border-radius: 0.5rem; margin-bottom: 1rem; box-sizing: border-box; }
+        .btn-blue { width: 100%; padding: 0.875rem; background: var(--brand-blue); color: white; font-weight: 600; border: none; border-radius: 0.5rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="title-group">
+            <a href="../index.html" class="back-btn"><i data-lucide="arrow-left" style="width:20px;"></i></a>
+            <div>
+                <div style="font-size:0.75rem; color:var(--brand-blue);">पाणी साठा आणि वितरण लॉग</div>
+                <h1 style="margin:0; font-size:1.5rem;">जल वाहिनी व्यवस्थापन (Water Hub)</h1>
+            </div>
+        </div>
+        <div class="status-pill">
+            <div style="width:8px; height:8px; background:var(--brand-blue); border-radius:50%;"></div> मुख्य जलवाहिनी: सुरळीत
+        </div>
+    </div>
+
+    <div class="summary-grid">
+        <div class="summary-card glow-blue">
+            <p style="margin:0 0 0.5rem 0; color:var(--text-muted); font-size:0.875rem;">मुख्य पाण्याच्या टाकीची पातळी</p>
+            <h2 style="margin:0; font-size:2.5rem;">82% भरली आहे</h2>
+            <div class="progress-bg"><div class="progress-fill"></div></div>
+            <p style="margin:0.5rem 0 0 0; color:var(--text-muted); font-size:0.75rem;">एकूण क्षमता: 50,000 लीटर</p>
+            <div class="icon-box" style="background:rgba(59, 130, 246, 0.1); color:var(--brand-blue);"><i data-lucide="waves"></i></div>
+        </div>
+        <div class="summary-card glow-green">
+            <p style="margin:0 0 0.5rem 0; color:var(--text-muted); font-size:0.875rem;">पाण्याची शुद्धता (TDS Level)</p>
+            <h2 style="margin:0; font-size:2.5rem; color:var(--brand-green);">145 PPM</h2>
+            <p style="margin:1rem 0 0 0; color:var(--brand-green); font-size:0.75rem; background:rgba(16,185,129,0.1); padding:4px 8px; border-radius:4px; display:inline-block;">✓ पिण्यासाठी उत्तम आणि सुरक्षित पाणी</p>
+            <div class="icon-box" style="background:rgba(16, 185, 129, 0.1); color:var(--brand-green);"><i data-lucide="shield-check"></i></div>
+        </div>
+    </div>
+
+    <div class="main-grid">
+        <div class="table-card">
+            <h3 style="margin:0; display:flex; align-items:center; gap:0.5rem;"><i data-lucide="clock" style="color:var(--brand-blue);"></i> पाणी सोडण्याचे वेळापत्रक (Daily Timing)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>वितरण विभाग (Area)</th>
+                        <th>वेळ (Timing)</th>
+                        <th>स्थिती (Current Status)</th>
+                    </tr>
+                </thead>
+                <tbody id="live-water-table">
+                    <tr><td colspan="3" style="text-align:center; color:var(--text-muted);">डेटा सिंक होत आहे (Syncing Live Data)...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <div class="form-card">
+                <h3 style="margin:0 0 1rem 0; display:flex; align-items:center; gap:0.5rem; font-size:1.1rem;"><i data-lucide="receipt" style="color:var(--brand-blue);"></i> वार्षिक पाणी पट्टी तपासा</h3>
+                <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:1rem;">तुमचा घर नंबर (House ID) टाकून पाणी पट्टीची थकबाकी तपासा.</p>
+                <input type="text" class="input-box" placeholder="उदा. H-104">
+                <button class="btn-blue" onclick="alert('This is a read-only public form.')"><i data-lucide="search" style="width:16px; margin-bottom:-3px;"></i> कर तपशील शोधा</button>
+            </div>
+            
+            <div class="form-card">
+                <h3 style="margin:0 0 1rem 0; display:flex; align-items:center; gap:0.5rem; font-size:1.1rem;"><i data-lucide="truck" style="color:var(--brand-yellow);"></i> शासकीय टँकर मागणी अर्ज</h3>
+                <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:1rem;">घरी लग्नकार्य किंवा विहीर कोरडी पडल्यास तातडीच्या टँकरसाठी अर्ज करा.</p>
+                <select class="input-box">
+                    <option>मागणीचे कारण निवडा</option>
+                    <option>घरगुती सार्वजनिक कार्यक्रम / लग्नकार्य</option>
+                    <option>विहीर कोरडी पडणे</option>
+                </select>
+                <input type="date" class="input-box">
+                <button class="btn-blue" style="background:rgba(59, 130, 246, 0.1); border:1px solid var(--brand-blue); color:var(--brand-blue);" onclick="alert('This is a read-only public form.')">टँकरची मागणी नोंदवा</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        async function syncLiveWaterData() {
+            try {
+                const response = await fetch('../analytics/fetch-live-status.php');
+                const data = await response.json();
+
+                if (data.status === "success" && data.wards) {
+                    const tableBody = document.getElementById('live-water-table');
+                    let htmlRows = '';
+
+                    data.wards.forEach(ward => {
+                        const isOn = ward.water_status === 'ON';
+                        const statusColor = isOn ? '#3b82f6' : '#64748b'; 
+                        const statusBg = isOn ? 'rgba(59, 130, 246, 0.1)' : 'rgba(100, 116, 139, 0.1)';
+                        const statusText = isOn ? 'पाणी सुरू (ON)' : 'पाणी बंद (OFF)';
+
+                        htmlRows += `
+                            <tr>
+                                <td style="font-weight: 500;">${ward.ward_name}</td>
+                                <td style="color: var(--text-muted);">${ward.supply_time}</td>
+                                <td>
+                                    <span style="background: ${statusBg}; color: ${statusColor}; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; border: 1px solid ${statusColor}40;">
+                                        ${statusText}
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    tableBody.innerHTML = htmlRows;
+                }
+            } catch (error) {
+                console.error("Database connection severed:", error);
+            }
+        }
+        document.addEventListener("DOMContentLoaded", syncLiveWaterData);
+    </script>
+</body>
+</html>

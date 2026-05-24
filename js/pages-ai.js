@@ -103,19 +103,50 @@ Pages.analytics = function() {
       <p style="font-size:0.6875rem;color:var(--rose);margin-top:0.5rem">↓ ३ निवारित आज</p>
     </div>
   </div>
-  <div class="grid-2" style="align-items:start">
-    <div class="card-static" style="padding:1.5rem;border-radius:1.5rem">
-      <h2 style="font-size:1.125rem;font-weight:700;margin-bottom:1rem">कर्मचारी स्थिती (Staff Status)</h2>
-      <div id="staff-status-list" style="display:flex;flex-direction:column;gap:0.5rem"></div>
+  <div class="grid-2" style="align-items:start;margin-bottom:1.5rem">
+    <div class="card-static" style="padding:1.5rem;border-radius:1.5rem;border-top:3px solid var(--amber)">
+      <h2 style="font-size:1.125rem;font-weight:700;margin-bottom:1rem;color:var(--amber)"><i data-lucide="bolt" style="width:18px;height:18px"></i> वीज नियंत्रण (Power Control)</h2>
+      <form id="admin-power-form">
+        <label class="label">वॉर्ड निवडा</label>
+        <select id="admin-power-ward" class="select-input" style="margin-bottom:0.75rem" required>
+          <option value="1">प्रभाग क्र. १ (मुख्य बाजारपेठ)</option>
+          <option value="2">प्रभाग क्र. २ (शाळा परिसर)</option>
+          <option value="3">प्रभाग क्र. ३ (पश्चिम गल्ली)</option>
+        </select>
+        <label class="label">स्थिती</label>
+        <select id="admin-power-status" class="select-input" style="margin-bottom:1rem" required>
+          <option value="ON">ON (सुरू)</option>
+          <option value="OFF">OFF (लोड शेडिंग)</option>
+        </select>
+        <button type="submit" id="admin-power-btn" class="btn btn-block" style="background:var(--amber);color:white">अपडेट करा</button>
+      </form>
     </div>
-    <div class="card-static" style="padding:1.5rem;border-radius:1.5rem">
-      <h2 style="font-size:1.125rem;font-weight:700;margin-bottom:1rem">विभागवार तक्रारी</h2>
-      <div style="display:flex;flex-direction:column;gap:0.75rem">
-        <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.25rem"><span>वीज विभाग</span><span>४२</span></div><div class="progress"><div class="progress-bar" style="width:70%;background:var(--amber)"></div></div></div>
-        <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.25rem"><span>पाणी विभाग</span><span>२८</span></div><div class="progress"><div class="progress-bar" style="width:47%;background:var(--blue)"></div></div></div>
-        <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.25rem"><span>स्वच्छता</span><span>१५</span></div><div class="progress"><div class="progress-bar" style="width:25%;background:var(--purple)"></div></div></div>
-        <div><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.25rem"><span>रस्ते/इतर</span><span>९</span></div><div class="progress"><div class="progress-bar" style="width:15%;background:var(--rose)"></div></div></div>
-      </div>
+    <div class="card-static" style="padding:1.5rem;border-radius:1.5rem;border-top:3px solid var(--sky)">
+      <h2 style="font-size:1.125rem;font-weight:700;margin-bottom:1rem;color:var(--sky)"><i data-lucide="droplets" style="width:18px;height:18px"></i> पाणी नियंत्रण (Water Control)</h2>
+      <form id="admin-water-form">
+        <label class="label">वॉर्ड निवडा</label>
+        <select id="admin-water-ward" class="select-input" style="margin-bottom:0.75rem" required>
+          <option value="1">प्रभाग क्र. १ (मुख्य बाजारपेठ)</option>
+          <option value="2">प्रभाग क्र. २ (शाळा परिसर)</option>
+          <option value="3">प्रभाग क्र. ३ (पश्चिम गल्ली)</option>
+        </select>
+        <label class="label">वॉल्व्ह स्थिती</label>
+        <select id="admin-water-status" class="select-input" style="margin-bottom:1rem" required>
+          <option value="ON">ON (सुरू)</option>
+          <option value="OFF">OFF (बंद)</option>
+        </select>
+        <button type="submit" id="admin-water-btn" class="btn btn-block" style="background:var(--sky);color:white">अपडेट करा</button>
+      </form>
+    </div>
+  </div>
+  <div class="grid-2" style="align-items:start">
+    <div class="card-static" style="padding:1.5rem;border-radius:1.5rem;border-top:3px solid var(--fuchsia)">
+      <h2 style="font-size:1.125rem;font-weight:700;margin-bottom:1rem;color:var(--fuchsia)"><i data-lucide="bus" style="width:18px;height:18px"></i> बस वेळापत्रक (Transit)</h2>
+      <form id="admin-transit-form">
+        <label class="label">पुढील बसची वेळ</label>
+        <input id="admin-transit-time" class="input" placeholder="उदा. १२:३० PM" style="margin-bottom:1rem" required>
+        <button type="submit" id="admin-transit-btn" class="btn btn-block" style="background:var(--fuchsia);color:white">वेळ अपडेट करा</button>
+      </form>
     </div>
   </div>`;
 };

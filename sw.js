@@ -6,6 +6,10 @@ const ASSETS = [
   '/js/pages-core.js', '/js/pages-services.js', '/js/pages-more.js',
   '/js/pages-ai.js', '/js/pages-bus.js', '/js/modules.js', '/js/bus-tracker.js',
   '/lang/mr.json', '/lang/en.json', '/lang/hi.json',
+  '/images/bence-balla-schottner-JV-zjVX_m94-unsplash.jpg',
+  '/images/bus.png', '/images/complain.jfif', '/images/ffarm.jfif',
+  '/images/news.jfif', '/images/power.jfif', '/images/sven-V7WkmXntA8M-unsplash.jpg',
+  '/images/wash-health-care-rev.png', '/images/water.jfif', '/images/weather.jpg'
 ];
 
 self.addEventListener('install', e => {

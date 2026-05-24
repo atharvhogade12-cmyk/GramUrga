@@ -17,10 +17,13 @@
     "admin": "Admin",
     "analytics": "Analytics",
     "login": "Login",
+    "admin_login": "Admin Login",
+    "citizen_login": "Citizen Login",
     "logout": "Logout",
     "services": "Services",
     "ai_tools": "AI Tools",
     "transport": "Transport",
+    "about": "About Us",
     "settings": "Settings"
   },
   "landing": {
@@ -118,6 +121,25 @@
     "submit": "Login",
     "error": "Invalid credentials"
   },
+  "news": {
+    "official_announce": "OFFICIAL ANNOUNCEMENTS",
+    "bulletin_title": "Gram Digital Newsletter",
+    "download_docs": "Download Documents",
+    "house_list": "🏠 House List 2026.pdf",
+    "budget_report": "📋 Budget Report 2026.pdf",
+    "important_alerts": "Important Notices",
+    "no_news": "No news bulletins available.",
+    "error_loading": "Error loading news data.",
+    "cat_schemes": "Govt Scheme",
+    "cat_power": "Power Dept",
+    "cat_water": "Water Dept",
+    "cat_agri": "Agriculture",
+    "cat_general": "General Notice",
+    "news_1_title": "\"Majhi Ladki Bahin\" Scheme Special Registration Camp Tomorrow!",
+    "news_1_content": "Special registration camp for women with incomplete applications at Gram Panchayat office from 9 AM to 5 PM tomorrow. Bring Aadhaar, Bank passbook, and Ration card.",
+    "news_2_title": "Power supply will be suspended tomorrow from 2 to 5 PM",
+    "news_2_content": "Due to main transformer maintenance work, power supply will be shut down in Ward 3 and 4 tomorrow from 2 PM to 5 PM. Please cooperate."
+  },
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong",
@@ -127,5 +149,35 @@
     "location": "Kolhapur, Maharashtra",
     "secured": "All data secured (AES-256)",
     "footer": "Secure & Digital Village Management System"
+  },
+  "hero": {
+    "title": "Smart Village Governance",
+    "subtitle": "Empowering our village with clean energy, digital services, and transparency.",
+    "badge": "System Online",
+    "explore_btn": "Explore Services"
+  },
+  "about": {
+    "title": "About GramUrja",
+    "description": "GramUrja is an integrated digital platform designed to bring all essential government, municipal, and agricultural services directly to our village residents. By uniting smart grids, water management, state transport tracking, and artificial intelligence, we aim to build a sustainable, self-reliant digital community.",
+    "team_title": "Village Leadership & Coordination",
+    "sarpanch_name": "Shri. Marutirao Patil",
+    "sarpanch_role": "Sarpanch (Village Head)",
+    "gramsevak_name": "Shri. Chirag Solanki",
+    "gramsevak_role": "Gram Sevak (Govt. Administrator)",
+    "tech_name": "Capstone Group 13",
+    "tech_role": "Project Developers (CSE AI & ML)",
+    "call_btn": "Call Direct",
+    "college_title": "D.Y. Patil College of Engineering & Technology, Kolhapur (DYPCET)",
+    "college_desc": "D.Y. Patil College of Engineering & Technology, Kolhapur is an Autonomous Engineering Institute affiliated with Shivaji University, Kolhapur. NAAC Accredited with 'A' Grade and NBA Accredited departments, it stands as a pioneer in engineering excellence and innovation.",
+    "college_subtitle": "Autonomous Institute • NAAC 'A' Grade • NBA Accredited",
+    "dept_title": "Department of Computer Science & Engineering (AI & ML)",
+    "mentor_title": "Guided By (Class Teacher)",
+    "mentor_name": "Prof. P. S. Chavhan",
+    "mentor_role": "Class Teacher (First Year CSE Department)",
+    "developers_title": "Capstone Project Developers — Group 13",
+    "project_desc": "GramUrja was designed and developed as a Capstone Project by the first-year Computer Science & Engineering (Artificial Intelligence and Machine Learning) students at DYPCET Kolhapur to digitize rural governance for improved village connectivity.",
+    "back_landing": "Back to Home",
+    "student_department": "First Year CSE (AI & ML)",
+    "roll_no": "Roll No:"
   }
 }

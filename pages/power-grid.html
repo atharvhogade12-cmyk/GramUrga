@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ग्रामऊर्जा // ऊर्जा ग्रीड व्यवस्थापन (Power Hub)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-dark: #0b1120; --card-bg: #111827; --border-color: #1f2937;
+            --text-main: #f8fafc; --text-muted: #94a3b8;
+            --brand-yellow: #f59e0b; --brand-blue: #3b82f6; --brand-green: #10b981;
+        }
+        body { background-color: var(--bg-dark); color: var(--text-main); font-family: 'Poppins', sans-serif; margin: 0; padding: 2rem; min-height: 100vh; }
+        
+        /* Header */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .title-group { display: flex; align-items: center; gap: 1rem; }
+        .back-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: var(--text-main); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; text-decoration: none; }
+        .back-btn:hover { background: rgba(255,255,255,0.1); }
+        .status-pill { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--brand-green); padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; }
+        
+        /* Top Summary Cards */
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
+        .summary-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; position: relative; }
+        .summary-card.glow-yellow { border-top: 2px solid var(--brand-yellow); }
+        .summary-card.glow-blue { border-top: 2px solid var(--brand-blue); }
+        .icon-box { position: absolute; right: 1.5rem; top: 1.5rem; width: 48px; height: 48px; border-radius: 0.75rem; display: flex; justify-content: center; align-items: center; }
+        
+        /* Main Layout */
+        .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+        @media (max-width: 1024px) { .main-grid { grid-template-columns: 1fr; } }
+        
+        /* Table Box */
+        .table-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; border-top: 2px solid var(--brand-yellow); }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th { text-align: left; padding: 1rem; color: var(--text-muted); font-size: 0.875rem; border-bottom: 1px solid var(--border-color); }
+        td { padding: 1rem; font-size: 0.875rem; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        
+        /* Sidebar Forms */
+        .form-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .input-box { width: 100%; padding: 0.875rem; background: var(--bg-dark); border: 1px solid var(--border-color); color: white; border-radius: 0.5rem; margin-bottom: 1rem; box-sizing: border-box; }
+        .btn-yellow { width: 100%; padding: 0.875rem; background: var(--brand-yellow); color: #000; font-weight: 600; border: none; border-radius: 0.5rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="title-group">
+            <a href="../index.html" class="back-btn"><i data-lucide="arrow-left" style="width:20px;"></i></a>
+            <h1 style="margin:0; font-size:1.5rem;">ऊर्जा ग्रीड व्यवस्थापन (Power Hub)</h1>
+        </div>
+        <div class="status-pill">
+            <div style="width:8px; height:8px; background:var(--brand-green); border-radius:50%;"></div> गावाची वीज: सुरळीत
+        </div>
+    </div>
+
+    <div class="summary-grid">
+        <div class="summary-card glow-yellow">
+            <p style="margin:0 0 0.5rem 0; color:var(--text-muted); font-size:0.875rem;">एकूण सौर ऊर्जा निर्मिती</p>
+            <h2 style="margin:0; font-size:2.5rem;">48.5 kW</h2>
+            <p style="margin:0.5rem 0 0 0; color:var(--brand-green); font-size:0.75rem;">↗ कालपेक्षा 12% जास्त निर्मिती</p>
+            <div class="icon-box" style="background:rgba(245, 158, 11, 0.1); color:var(--brand-yellow);"><i data-lucide="sun"></i></div>
+        </div>
+        <div class="summary-card glow-blue">
+            <p style="margin:0 0 0.5rem 0; color:var(--text-muted); font-size:0.875rem;">गावातील सद्य वीज वापर</p>
+            <h2 style="margin:0; font-size:2.5rem;">32.1 kW</h2>
+            <p style="margin:0.5rem 0 0 0; color:var(--text-muted); font-size:0.75rem;">शिल्लक ऊर्जा बॅटरी बँक मध्ये साठवली जात आहे.</p>
+            <div class="icon-box" style="background:rgba(59, 130, 246, 0.1); color:var(--brand-blue);"><i data-lucide="activity"></i></div>
+        </div>
+    </div>
+
+    <div class="main-grid">
+        <div class="table-card">
+            <h3 style="margin:0; display:flex; align-items:center; gap:0.5rem;"><i data-lucide="calendar" style="color:var(--brand-yellow);"></i> वीज कपात वेळापत्रक (Load Shedding)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>गावातील भाग (Zone)</th>
+                        <th>वेळ / कारण (Time/Reason)</th>
+                        <th>स्थिती (Status)</th>
+                    </tr>
+                </thead>
+                <tbody id="live-power-table">
+                    <tr><td colspan="3" style="text-align:center; color:var(--text-muted);">डेटा सिंक होत आहे (Syncing Live Data)...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <div class="form-card">
+                <h3 style="margin:0 0 1rem 0; display:flex; align-items:center; gap:0.5rem; font-size:1.1rem;"><i data-lucide="credit-card" style="color:var(--brand-blue);"></i> आपले लाईट बिल तपासा</h3>
+                <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:1rem;">तुमचा 12 अंकी ग्राहक क्रमांक (Consumer ID) टाकून चालू महिन्याचे बिल पहा.</p>
+                <input type="text" class="input-box" placeholder="उदा. ४३०१२३४५६७८९">
+                <button class="btn-yellow" onclick="alert('This is a read-only public form.')"><i data-lucide="search" style="width:16px; margin-bottom:-3px;"></i> बिल शोधा</button>
+            </div>
+            
+            <div class="form-card">
+                <h3 style="margin:0 0 1rem 0; display:flex; align-items:center; gap:0.5rem; font-size:1.1rem;"><i data-lucide="alert-circle" style="color:#f43f5e;"></i> वीज तक्रार नोंदवा</h3>
+                <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:1rem;">डीपी जळणे, वायर तुटणे किंवा मीटर खराब असल्यास त्वरित कळवा.</p>
+                <select class="input-box">
+                    <option>तक्रारीचा प्रकार निवडा</option>
+                    <option>वीज नाही (Power Outage)</option>
+                    <option>धोकादायक वायर (Broken Wire)</option>
+                </select>
+                <textarea class="input-box" placeholder="समस्येबद्दल सविस्तर माहिती इथे लिहा..." rows="3"></textarea>
+                <button class="btn-yellow" style="background:#f43f5e; color:white;" onclick="alert('This is a read-only public form.')">तक्रार सबमिट करा</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        async function syncLivePowerData() {
+            try {
+                const response = await fetch('../analytics/fetch-live-status.php');
+                const data = await response.json();
+
+                if (data.status === "success" && data.wards) {
+                    const tableBody = document.getElementById('live-power-table');
+                    let htmlRows = '';
+
+                    data.wards.forEach(ward => {
+                        const isOn = ward.power_status === 'ON';
+                        const statusColor = isOn ? '#10b981' : '#f43f5e'; 
+                        const statusBg = isOn ? 'rgba(16, 185, 129, 0.1)' : 'rgba(244, 63, 94, 0.1)';
+                        const statusText = isOn ? 'सुरू आहे (ON)' : 'लोड शेडिंग (OFF)';
+
+                        htmlRows += `
+                            <tr>
+                                <td style="font-weight: 500;">${ward.ward_name}</td>
+                                <td style="color: var(--text-muted);">${ward.shutdown_reason}</td>
+                                <td>
+                                    <span style="background: ${statusBg}; color: ${statusColor}; padding: 0.35rem 0.75rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; border: 1px solid ${statusColor}40;">
+                                        ${statusText}
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    tableBody.innerHTML = htmlRows;
+                }
+            } catch (error) {
+                console.error("Database connection severed:", error);
+            }
+        }
+        document.addEventListener("DOMContentLoaded", syncLivePowerData);
+    </script>
+</body>
+</html>

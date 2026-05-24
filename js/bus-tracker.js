@@ -13,14 +13,24 @@ const BusTracker = (() => {
       if (panel) panel.style.display = 'block';
     }
 
-    // Init Leaflet map
-    initMap();
-
     // Driver toggle
     document.getElementById('driver-toggle-btn')?.addEventListener('click', toggleSharing);
 
-    // Simulate some buses
-    simulateBuses();
+    // Poll until Leaflet is defined
+    function checkAndInit() {
+      if (typeof L !== 'undefined') {
+        initMap();
+        simulateBuses();
+      } else {
+        const container = document.getElementById('bus-map');
+        if (container) {
+          container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);font-size:0.875rem">Leaflet.js loading...</div>';
+        }
+        setTimeout(checkAndInit, 500);
+      }
+    }
+
+    checkAndInit();
   }
 
   function initMap() {
