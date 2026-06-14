@@ -3,6 +3,14 @@ require_once '../js/db-config.php';
 
 try {
     $sql = "
+    CREATE TABLE IF NOT EXISTS administrative_profiles (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(50) UNIQUE NOT NULL,
+        password_hash VARCHAR(255) NOT NULL,
+        assigned_role VARCHAR(50) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
     CREATE TABLE IF NOT EXISTS news_bulletin (
         id INT AUTO_INCREMENT PRIMARY KEY,
         category VARCHAR(100) NOT NULL,
@@ -69,7 +77,28 @@ try {
     ";
 
     $pdo->exec($sql);
-    echo "<h3>Database tables created successfully!</h3>";
+
+    // Insert Default Users with hashed passwords
+    $users = [
+        ['username' => 'gp_head', 'role' => 'admin'],
+        ['username' => 'water_admin', 'role' => 'water_head'],
+        ['username' => 'power_admin', 'role' => 'power_head'],
+        ['username' => 'news_admin', 'role' => 'news_head'],
+        ['username' => 'weather_admin', 'role' => 'weather_head']
+    ];
+    $default_password = getenv("ADMIN_DEFAULT_PASS") ?: "ChangeMe@SetViaEnv";
+    $hashed_password = password_hash($default_password, PASSWORD_BCRYPT);
+
+    $stmt = $pdo->prepare("INSERT IGNORE INTO administrative_profiles (username, password_hash, assigned_role) VALUES (:user, :pass, :role)");
+    foreach ($users as $u) {
+        $stmt->execute([
+            ':user' => $u['username'],
+            ':pass' => $hashed_password,
+            ':role' => $u['role']
+        ]);
+    }
+
+    echo "<h3>Database tables and users created successfully!</h3>";
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }

@@ -1,0 +1,81 @@
+# ==============================================================
+# GramUrga — .gitignore
+# ==============================================================
+
+# ──────────────────────────────────────────────
+# 🔐  SENSITIVE / SECRET FILES  (NEVER commit)
+# ──────────────────────────────────────────────
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Raw credentials file (replace with db-config.php using env vars)
+js/gramurja_db.php
+
+# ──────────────────────────────────────────────
+# 🖼️  LARGE / STOCK IMAGES (saves repo space)
+# ──────────────────────────────────────────────
+# These are large Unsplash photos (5MB+ combined).
+# Host them on a CDN / cloud storage instead.
+images/bence-balla-schottner-JV-zjVX_m94-unsplash.jpg
+images/sven-V7WkmXntA8M-unsplash.jpg
+
+# ──────────────────────────────────────────────
+# 📦  PHP / COMPOSER
+# ──────────────────────────────────────────────
+vendor/
+composer.lock
+*.phar
+
+# ──────────────────────────────────────────────
+# 🪟  OS & EDITOR JUNK FILES
+# ──────────────────────────────────────────────
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# ──────────────────────────────────────────────
+# 🪵  LOG & TEMP FILES
+# ──────────────────────────────────────────────
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# PHP error log
+php_errors.log
+error_log
+
+# ──────────────────────────────────────────────
+# 📤  BUILD / DIST OUTPUT (if added later)
+# ──────────────────────────────────────────────
+dist/
+build/
+node_modules/
+npm-debug.log*
+yarn-error.log

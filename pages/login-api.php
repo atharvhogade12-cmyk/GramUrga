@@ -41,6 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 case 'water_head':
                     $targetRoute = "../analytics/water-telemetry.php";
                     break;
+                case 'news_head':
+                    $targetRoute = "../analytics/manage-news.php";
+                    break;
+                case 'weather_head':
+                    $targetRoute = "../pages/weather-detector.html";
+                    break;
                 case 'transit_head':
                     $targetRoute = "../analytics/bus-tracker.html"; // Adjust to your actual file
                     break;

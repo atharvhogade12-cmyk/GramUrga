@@ -55,7 +55,7 @@ const Auth = (() => {
     const PUBLIC_PAGES = [
       'landing', 'login', 'dashboard', 'power', 'water', 'agriculture', 
       'sanitation', 'grievance', 'news', 'weather', 
-      'crop-diagnosis', 'market-chat', 'bus-tracker'
+      'crop-diagnosis', 'market-chat', 'bus-tracker', 'about'
     ];
     if (!session) return PUBLIC_PAGES.includes(page);
     const allowed = ACCESS[session.role] || [];

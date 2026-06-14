@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['admin_logged_in']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['admin_logged_in']) || ($_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'news_head')) {
     header("Location: ../pages/admin-login.html");
     exit();
 }
